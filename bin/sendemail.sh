@@ -1,0 +1,2 @@
+#!/bin/zsh
+curl --connect-timeout 15 -v --insecure "smtp://smtp.gmail.com:25" -u "lingqingmeng05:Pi384_Kn772_vet" --mail-from "<lingqingmeng05@gmail.com>" --mail-rcpt "cryptographylq@gmail.com" -T file.txt --ssl -vvv

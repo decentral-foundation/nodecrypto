@@ -6,8 +6,8 @@ console.log('account: ',account);
 // should have default value and type is credit
 let a = account.build({account_type: 'credit'});
 
-let b = account.buildDebit({name: 'john'});
-let c = account.buildCredit({name: 'trinity'});
+let b = account.buildDebit({name: 'alice'});
+let c = account.buildCredit({name: 'bob'});
 
 // should override sync and stats field to whats passed in
 let d = account.build({sync: true, stats: false});
