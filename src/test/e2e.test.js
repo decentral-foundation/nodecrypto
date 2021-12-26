@@ -24,9 +24,10 @@ let decipher = decrypt_v1(cipherFd,testPassword);
 assert.deepStrictEqual(decipher,testEntry);
 
 
-// let testFileStream = "./static/logins.csv.enc"; 
-// let ourFile = reassemble(testFileStream);
-// assert.deepStrictEqual(ourFile,"./static/unenc.logins.csv");
+// has to be ran with node src/test/e2e.test.js while in source folder for now
+let testFileStream = "./static/logins.csv.enc"; 
+let ourFile = reassemble(testFileStream);
+assert.deepStrictEqual(ourFile,"unenc.logins.csv.enc");
 
 
 let testBase64Str = "YXBwbGljYXRpb246c2VjcmV0";
