@@ -3,6 +3,7 @@ src/file.*.enc
 src/file.*.enc
 src/*.file.md
 src/*.file.txt
+log/*.md
 SECURITY.md
 PROSPECTUS.md
 *~
