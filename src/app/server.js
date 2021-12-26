@@ -88,11 +88,7 @@ function sendPromise(filename,index,subdirectory,crypto) {
     })
   })
 }
-/*
-server_info-0_2021-10-25T20:56:39.895Z.md
-server_info-1_2021-10-25T20:56:39.897Z.md
-server_info-2_2021-10-25T20:56:39.897Z.md
-*/
+
 
 
 
