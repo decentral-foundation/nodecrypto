@@ -23,8 +23,14 @@ function intToHex(integer) {
 }
 
 
-const last= (arr) => {
+const last = (arr) => {
   return arr[arr.length-1];
+}
+
+function ende(arr) {
+  return arr.map(function (a) {
+    return a;
+  }).pop();
 }
 
 const initial = function (arr) {
@@ -42,6 +48,18 @@ const range = (start,end) => {
   return result;
 };
 
+function range_v1(start,end,content)  {
+  if (typeof end == 'undefined'){
+    end = start;
+    start = 0;
+  }
+  let result = [];
+  for (let i = start; i < end; i++){ 
+    result.push(content + i.toString())
+  }
+  return result;
+};
+
 const ENC_KEY = "defba315ababa315ababa315ababafed"; 
 const IV = "4747484718171818"; 
 
@@ -49,12 +67,13 @@ const IV = "4747484718171818";
 /**
  * @description App uses this to encrypt a string
  * @param  {string} val - a value string such as a long paragraph or markdown file
- * @return {string} encrypted 
+ * @param {Buff} encryption_key - need to double check the type here
+ * @return {string}  - a key to use other than default 
  */
 const encrypt_v1 = ((val,encryption_key) => {
   let ENCK = encryption_key || ENC_KEY;
   let cipher = crypto.createCipheriv('aes-256-cbc', ENCK, IV);
-  let encrypted = cipher.update(val, 'utf8', 'base64');
+  let encrypted = cipher.update(val, 'utf-8', 'base64');
   encrypted += cipher.final('base64');
   return encrypted;
 });
@@ -63,12 +82,10 @@ const decrypt_v1 = ((encrypted,decryption_key) => {
   let DECK = decryption_key || ENC_KEY;
   let decipher = crypto.createDecipheriv('aes-256-cbc', DECK, IV);
   let decrypted = decipher.update(encrypted, 'base64', 'utf8');
-  return (decrypted + decipher.final('utf8'));
+  return (decrypted + decipher.final('utf-8'));
 });
 
-function EncryptV1() {
-  
-}
+
 
 
 
@@ -98,7 +115,63 @@ function genBase64({ stringBase = 'base64', byteLength = 32 } = {}) {
   });
 }
 
+/**
+ * @param {string} Specify utf-8 in decoding
+ */
+function decodeBase64(strBase64, decoding = 'hex') {
+  return Buffer.from(strBase64, 'base64').toString(decoding);
+}
 
+
+/**
+ * @description Removes the tail and reattaches the head
+ * @param {string}
+ * @return 
+ */
+function dissect(fileStream,options) {
+  let { IS_SLASH } = options;
+  let delimiter = IS_SLASH ? '/' : '.';
+  let split = fileStream.split(delimiter);
+  let tail = ende(split);
+  let head = `un${tail}`;
+  let fileDes = split.unshift(head);
+  let fileDescriptor = split.join(delimiter);
+  return fileDescriptor;
+}
+// fileStream such as logins.csv.enc into unenc.logins.csv
+
+
+/**
+ * @description Split slashes first then dots
+ * @param dcStore {string} - such as 
+ * @return
+ */ 
+function reassemble(dcStore) {
+  let split = dcStore.split("/");
+  let file = ende(split);
+  let updatedFile = dissect(file,{isSLASH: false});
+
+  // let updatedDir = dissect(file,{isSLASH})
+  return updatedFile;
+}
+// dcStore such as "./static/logins.csv.enc"
+
+/**
+
+dcStore will start as
+
+inner file:  ./static/logins.csv.enc
+arr1:  [ '', '/static/logins', 'csv', 'enc' ]
+arrPop: [ '', '/static/logins', 'csv' ]
+arrUnshift: [ 'unenc', '', '/static/logins', 'csv' ]
+err in write stream:  [Error: ENOENT: no such file or directory, open 'unenc../static/logins.csv'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'unenc../static/logins.csv'
+}
+
+*/
 
 
 module.exports = {
@@ -107,7 +180,10 @@ module.exports = {
   initial,
   last,
   range,
+  range_v1,
   getCipherKey,
+  reassemble,
   encrypt_v1,
-  decrypt_v1
+  decrypt_v1,
+  decodeBase64
 };

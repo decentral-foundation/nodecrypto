@@ -1,3 +1,5 @@
+"use strict";
+
 const assert = require('assert').strict;
 const { LRUCache } = require('./index.js');
 
@@ -37,4 +39,7 @@ assert.deepEqual(h,3);
 
 let i = valueKeyStorage.get(4);
 assert.deepStrictEqual(i,4);
+
+let bufferStorage = new LRUCache();
+bufferStorage.setSize(64);
 	

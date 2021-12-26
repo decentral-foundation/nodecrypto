@@ -4,3 +4,5 @@ src/file.*.enc
 src/*.file.md
 src/*.file.txt
 SECURITY.md
+PROSPECTUS.md
+*~

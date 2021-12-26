@@ -2,6 +2,7 @@
 
 const express = require('express');
 const childProcess = require('child_process');
+const path = require('path');
 
 const fs = require("fs");
 const fsPromises = fs.promises;
@@ -18,12 +19,19 @@ const lrucache = new LRUCache();
 lrucache.setSize(64);
 
 
-
+/**
+ * @description Upon app start up we want to collect port along with 2 numbers so that
+ * @description we put server start up information each triplet will be different hashes and
+ * @param min {number} - is the floor and 
+ * @param max {number} - is the ceiling 
+ * @param PORT {number} - is the string converted to number value for port
+ * 
+ */
 let app = require('./app');
 let proms = Promise.all(
-  range(0,3,"server_info-")
+  range(0,3,"debug-")
     .map(function(fn,i) {
-      return sendPromise(fn,1+i,"logs",crypto)
+      return sendPromise(fn,1+i,"log",crypto)
     })
     .map(function(prom,j) {
       let valueKeyStorage = Buffer.concat([
@@ -47,12 +55,19 @@ app.listen(PORT, function () {
 
 
 
-
+/**
+ * @description At the end the function returns an unthened promise 
+ * @param filename {string} - form `debug-${[1-3]}_2021-${[1-12]}-${[1-31]}TXX:XX:XX.XXXZ.md`
+ * @param index {string} - eventually becomes format 
+ * @param crypto {object} - native library to call randomBytes and converting to base64
+ * @returns {Promise} - will be called in a Promise.all
+ */
 function sendPromise(filename,index,subdirectory,crypto) {
   let d = (new Date).toISOString();
   let filestream = filename  + '_' +  d  + '.md';
-  let dirpath = __dirname + '/'+ subdirectory;
+  let dirpath = '.' + '/'+ subdirectory;
   let location = dirpath + '/' + filestream;
+  console.log("dirpath and location: ",dirpath,location);
   let indexData = index + " on " + "\n" 
     + Math.floor(Math.random() * (9000000000000004 - min + 1)) + "\n"
     + crypto.randomBytes(16).toString('base64') 
@@ -73,6 +88,11 @@ function sendPromise(filename,index,subdirectory,crypto) {
     })
   })
 }
+/*
+server_info-0_2021-10-25T20:56:39.895Z.md
+server_info-1_2021-10-25T20:56:39.897Z.md
+server_info-2_2021-10-25T20:56:39.897Z.md
+*/
 
 
 

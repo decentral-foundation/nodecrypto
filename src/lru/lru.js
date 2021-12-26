@@ -3,10 +3,15 @@
 module.exports = (function() {
 
   let maxSize;
+  let userId;
   /**
+   * @param {number} - Optional id
    * @description A LRUCache class with set
    */
-  const LRUCache = function() {
+  const LRUCache = function(id) {
+    if (typeof id === "number") {
+      userId = id;
+    }
     this.cache = new Map();
     this.capacitySet = false;
   };
