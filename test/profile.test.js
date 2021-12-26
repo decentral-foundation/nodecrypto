@@ -66,9 +66,6 @@ MethodProfiler.prototype = {
 
 
 
-/* Status: Untidy */
-
-
 var list = new ListBuilder('list-container',50);
 list = new SimpleProfiler(list); // wrap object in decorator 
 list.buildList(); //Creates the list and displays build list 298

@@ -1,6 +1,4 @@
-// create 'fs' module variable
 let fs = require("fs");
-// new new
 var emitter = require('events').EventEmitter;
 
 function LoopProcessor(num) {
