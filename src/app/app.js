@@ -265,11 +265,6 @@ app.post('/v1/view/:filename', function (request,response) {
 
 
 app.post('/v1/unlock/:filename',function(request,response) {
-  // unused
-  // let tempFileStream = "bE5sbTePdTwlyXlPD0sIvdOSwKnroHAMth371eOlOJU3i0odsSt6x2Qv9+GbFjmQ";
-  // let decipherText = decrypt_v1(tempFileStream,request.data);
-  
-
   let {decipherText, userId} = request.data;
   let fileStream = valueKeyStorage.filter(function (item) {
     return item.userId === userId; 
