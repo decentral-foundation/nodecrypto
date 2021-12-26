@@ -150,11 +150,8 @@ function reassemble(dcStore) {
   let split = dcStore.split("/");
   let file = ende(split);
   let updatedFile = dissect(file,{isSLASH: false});
-
-  // let updatedDir = dissect(file,{isSLASH})
   return updatedFile;
 }
-// dcStore such as "./static/logins.csv.enc"
 
 /**
 
