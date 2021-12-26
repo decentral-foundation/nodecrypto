@@ -12,8 +12,6 @@ module.exports = (function (){
   function SecureLRU(size) {
     LRUCache.call(this);
     LRUCache.prototype.setSize.call(this,size);
-    // this.encrypt_v1 = encrypt_v1; 
-    // this.decrypt_v1 = decrypt_v1;
   }
 
   /**

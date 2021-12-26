@@ -32,17 +32,5 @@ let f = new Food('pomelo', 7);
 let ff = new Food('clementine',7);
 
 
-
-
 console.log(f.add(323,23));
-
 console.log(ff.add(232,10));
-
-// So what's the point of Function#prototype#call
-
-/*
-
-The point is that Food extends a field of Product. 
-So how does this help me with express handling? 
-
-*/
