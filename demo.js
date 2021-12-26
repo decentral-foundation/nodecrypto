@@ -3,10 +3,6 @@
 let encrypt = require("./src/app/encrypt");
 let plaintext = {'file': './static/logins.csv','password':'mypassword4'};
 let content = encrypt(plaintext);
-// confirmed works up to this point
-// behavior is that it puts it in the static folder
-// even when I call it above src
-
 
 
 function doSomething(nom) {
