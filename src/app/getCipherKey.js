@@ -60,6 +60,7 @@ function range_v1(start,end,content)  {
   return result;
 };
 
+// this needs to be put into a parser
 const ENC_KEY = "defba315ababa315ababa315ababafed"; 
 const IV = "4747484718171818"; 
 
@@ -84,8 +85,6 @@ const decrypt_v1 = ((encrypted,decryption_key) => {
   let decrypted = decipher.update(encrypted, 'base64', 'utf8');
   return (decrypted + decipher.final('utf-8'));
 });
-
-
 
 
 
@@ -153,22 +152,7 @@ function reassemble(dcStore) {
   return updatedFile;
 }
 
-/**
 
-dcStore will start as
-
-inner file:  ./static/logins.csv.enc
-arr1:  [ '', '/static/logins', 'csv', 'enc' ]
-arrPop: [ '', '/static/logins', 'csv' ]
-arrUnshift: [ 'unenc', '', '/static/logins', 'csv' ]
-err in write stream:  [Error: ENOENT: no such file or directory, open 'unenc../static/logins.csv'] {
-  errno: -2,
-  code: 'ENOENT',
-  syscall: 'open',
-  path: 'unenc../static/logins.csv'
-}
-
-*/
 
 
 module.exports = {

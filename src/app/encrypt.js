@@ -15,11 +15,11 @@ const AppendInitVect = require('./appendInitVect');
  * @param {options} - FIELD boolean ABSOLUTE_PATH
  */
 function encrypt({ file, password, options }) {
-  console.log("in encrypt file: ",file);
+  // console.log("in encrypt file: ",file);
 
   let metadata = path.parse(file);
-  console.log("path.parse(file): ",metadata);
-  console.log("in password: ",password);
+  // console.log("path.parse(file): ",metadata);
+  // console.log("in password: ",password);
   // action required convert to string else throw
   const initVect = crypto.randomBytes(16);
   const CIPHER_KEY = getCipherKey(password);

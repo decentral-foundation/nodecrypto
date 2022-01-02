@@ -316,4 +316,25 @@ cd test
 node readerstream.js
 ```
 
+----
+
+
+```js
+/**
+
+dcStore will start as
+
+inner file:  ./static/logins.csv.enc
+arr1:  [ '', '/static/logins', 'csv', 'enc' ]
+arrPop: [ '', '/static/logins', 'csv' ]
+arrUnshift: [ 'unenc', '', '/static/logins', 'csv' ]
+err in write stream:  [Error: ENOENT: no such file or directory, open 'unenc../static/logins.csv'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'unenc../static/logins.csv'
+}
+
+*/
+```
 

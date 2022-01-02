@@ -27,7 +27,6 @@ testPromise.then(res => {
 
 asyncPromise.then(res => {
   let response = res.slice(0,16);
-  console.log("response: ",response);
   assert.deepStrictEqual(response.length,16);
 })
 
