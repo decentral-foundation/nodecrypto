@@ -1,32 +1,5 @@
 # How to use
 
-
-
-## Protocol Definition
-
-
-## Purpose
-
-Scope: 
-Outcome: Create a QR code and or generate an address so that I can accept payments
-
-1. First you creat a file using the v1 api
-2. So we know that another server in the DMZ will use a crypto library. They will be listening on 8546. 
-3. bar
-4. Then decrypt the file the server gets a request but it needs to be able to filter say for example someone else is trying to decrypt your file
-  * decision made to add in sessions later
-5. It needs to decrypt it and you pass the decryption key 
-  * during this process in the future it will first check in the request if you made it as a person authorized to decrypt the filename in the first place
-  * for now just assume yes it has been decided
-6. now you have a file for unenc.myfile.md which sort of is weird since it should be just myfile.md right? Explanation below
-  * well when it first gets created if we don't have sessions someone else can just query it at the moment it gets created before it gets encrypted which breaks this concept
-
-
-
-## Quality standards
-
-Readable code. Design for an interface not an implementation.
-
 ## Run the server
 
 ```zsh
