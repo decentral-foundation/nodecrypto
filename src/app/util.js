@@ -84,5 +84,4 @@ function decrypt({ file, password, options }) {
   });
 }
 
-// take note on Oct 5th 2021 this file was formerly known as decrypt2.js
 module.exports = { streamReader, decrypt};
