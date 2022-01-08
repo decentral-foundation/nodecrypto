@@ -75,5 +75,6 @@ const promisify = (inner) => {
 module.exports = {
   LRUCache,
   encode,
-  bufToStr
+  bufToStr,
+  intToHex
 }

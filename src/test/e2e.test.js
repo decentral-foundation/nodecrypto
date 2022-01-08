@@ -10,7 +10,9 @@ let {
   reassemble,
   decodeBase64,
   genBase64,
-  getCipherKeyAsync
+  getCipherKey,
+  getCipherKeyAsync,
+  intToHex
 } = require("../app/getCipherKey");
 
 
@@ -41,6 +43,26 @@ assert.deepStrictEqual("6170706c69636174696f6e3a736563726574",hexFile);
 assert.deepStrictEqual("application:secret",stringFile);
 
 
+let testBase64StrArr = [116, 24, 223, 180, 151, 153, 224, 37, 79, 250, 96, 125, 216, 173,
+      187, 186, 22, 212, 37, 77, 105, 214, 191, 240, 91, 88, 5, 88, 83,
+      132, 141, 121]
+let decodedArr = decodeBase64('dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk','hex'); //after this do hex to decimal
+console.log("decodedArr: ",decodedArr);
+console.log("typeof decodedArr: ",typeof decodedArr);
+let accumulation = [];
+for (let i = 0; i <= decodedArr.length; i+=2){
+  let a = decodedArr.charAt(i);
+  let b = decodedArr.charAt(i+1);
+  accumulation.push(String(a)+String(b));
+}
+accumulation.pop();
+console.log("accumulation: ",accumulation);
+let mapped = testBase64StrArr.map(function (r) {
+  return intToHex(r);
+});
+assert.deepStrictEqual(mapped,accumulation);
+
+
 
 // we generate random passwords then pass them in asynchronously into S256
 let testPromises = [genBase64(),genBase64(),genBase64(),genBase64()];
@@ -66,5 +88,45 @@ Promise.all(testPromises).then(function (res) {
   for (let i = 0; i < digestResponse.length; i++) {
     assert.deepStrictEqual(true,Buffer.isBuffer(digestResponse[i]));
   }
-  
 })
+
+let generatorPromise = genBase64({
+  string: "hex",
+  byteLength: 55
+})
+
+let observablePromise = genBase64({
+  string: "hex",
+  byteLength: 56
+})
+
+generatorPromise.then(res => {
+  assert.deepStrictEqual(res.length,76);
+})
+
+observablePromise.then(res => {
+  assert.deepStrictEqual(res.length,76);
+})
+
+
+
+
+// test string to sha256 works as intended
+let testOctetString = 'confidentialApplication:topSecret';
+let s256buffer = getCipherKey(testOctetString);
+let s256 = getCipherKey(testOctetString);
+assert.deepStrictEqual(s256,s256buffer);
+
+
+/*
+let testHeaderString = "confidentialApplication:topSecret"
+
+*/
+
+/*
+let testOctetString = 'dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk';
+expected results 2
+[116, 24, 223, 180, 151, 153, 224, 37, 79, 250, 96, 125, 216, 173,
+      187, 186, 22, 212, 37, 77, 105, 214, 191, 240, 91, 88, 5, 88, 83,
+      132, 141, 121]
+*/
