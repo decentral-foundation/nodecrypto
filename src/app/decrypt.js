@@ -8,8 +8,8 @@ const { getCipherKey,reassemble } = require('./getCipherKey');
 
 
 /**
- * @description
- * @param
+ * @description ⚠️ This seems like its not used - Action item decide where its needed
+ * @param ⚠️ If not needed remove before push
  */
 const checkHeadForDot = (file,ABSOLUTE_PATH) => {
   if (!ABSOLUTE_PATH) {
@@ -81,7 +81,7 @@ function decrypt({ dc_file, password, options }) {
     let topdown = 'un'+down;
     // shift out then get last
     let a = arr.pop();
-    let t = a.split('/'); // [Users,cco,Foundation,nodecrypto,src,app,store]
+    let t = a.split('/'); // [Users,ec2-user,VersionControlSystem,nodecrypto,src,app,store]
     let middle = t.pop();
     // then piece it together
     let out = [topdown,middle,bottomup].join('.'); 

@@ -1,7 +1,8 @@
 "use strict";
 
 module.exports = (function (){
-  var child_process;
+  let child_process;
+  let zsh_command;
   
   function csvJSON(csv){
     const lines=csv.split("\n");
@@ -43,21 +44,10 @@ module.exports = (function (){
   }
 
 
-  function run_shell_command(command,cb) {   
-    exec(command, function(err,stdout,stderr){
-      if(err) {
-        cb(stderr,undefined);
-      } else {
-        console.log("stdout: ",stdout);
-        cb(null,stdout);
-     }
-   });
-  }
-
   // must do by nov 1: deprecate as in remove this if not use
   const exec = (scriptPath,callback) => {
     var invoked = false;
-    var process = childProcess.fork(scriptPath);
+    var process = this.childProcess.fork(scriptPath);
     process.on('error', function(err) {
       if (invoked) return;
       invoked = true;
@@ -71,17 +61,34 @@ module.exports = (function (){
     });
   }
 
-  function Helper(id) {
+  
+
+  function Helper(id,childProcess) {
     this.id = id;
+    this.childProcess = childProcess;
   }
 
-  Helper.prototype.setChildProcess = function(childProcess) {
-    child_process = childProcess;
+  function run_shell_command(command,cb) {   
+    exec(command, function(err,stdout,stderr){
+      if(err) {
+        cb(stderr,undefined);
+      } else {
+        console.log("stdout: ",stdout);
+        cb(null,stdout);
+     }
+   });
   }
 
-  Helper.prototype.getChildProcess = function() {
-    return child_process;
+  Helper.prototype.setZshCommand = function(zshCommand) {
+    zsh_command = zshCommand;
   }
+
+
+  Helper.prototype.execChildProcess = function(callback) {
+    run_shell_command(this.childProcess,callback);
+
+  }
+
   return Helper;
 
 })();

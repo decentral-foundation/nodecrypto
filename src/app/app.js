@@ -3,7 +3,7 @@
 let express = require("express");
 let app = express();
 let fs = require('fs');
-
+let childProcess = require('child_process');
 
 const bodyParser = require('body-parser');
 const encrypt = require("./encrypt");
@@ -32,8 +32,12 @@ app.get('/', (request, response) => {
 })
 
 app.get('/helper', function (request,response) {
-  let helper = new Helper(123456);
-  helper.setChildProcess(childProcess);
+  let helper = new Helper(123456,childProcess); //"curl -X POST http://localhost:3300/v0/updates -H 'Pragma: no-cache' "
+  console.log("helper: ",helper);
+  helper.execChildProcess();
+
+
+  //curl -X POST www.mmydomainname.com/v0/updates -H 'Pragma: no-cache' 
 })
 
 
@@ -45,6 +49,7 @@ app.get('/v0/updates', (request,response) => {
 app.post('/v0/updates', function (request,response) {
   let data = "my updates";
   let reqBody = request.body;
+  console.log("post hit v0")
   response.json({ 
     updates: ["no new updates",data],
     info: reqBody

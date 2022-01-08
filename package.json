@@ -1,0 +1,29 @@
+{
+  "name": "nodecrypto",
+  "version": "1.0.0",
+  "description": "## Run the server",
+  "main": "demo.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "dependencies": {
+    "n-readlines": "^1.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "serve": "node src/app/server.js 0 100",
+    "test": "node src/test/e2e.test.js ",
+    "testapi":"node test/endtoend.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/decentral-foundation/nodecrypto.git"
+  },
+  "author": "Ling Qing Meng",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/decentral-foundation/nodecrypto/issues"
+  },
+  "homepage": "https://github.com/decentral-foundation/nodecrypto#readme"
+}

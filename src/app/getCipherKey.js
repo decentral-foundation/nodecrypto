@@ -114,6 +114,16 @@ function genBase64({ stringBase = 'base64', byteLength = 32 } = {}) {
   });
 }
 
+function getCipherKeyAsync(password) {
+  return new Promise(function (resolve,reject) {
+    let resolver = crypto.createHash('sha256')
+      .update(password);
+    return resolve(resolver.digest());
+      
+  })
+  
+}
+
 /**
  * @param {string} Specify utf-8 in decoding
  */
@@ -166,5 +176,6 @@ module.exports = {
   reassemble,
   encrypt_v1,
   decrypt_v1,
-  decodeBase64
+  decodeBase64,
+  getCipherKeyAsync
 };

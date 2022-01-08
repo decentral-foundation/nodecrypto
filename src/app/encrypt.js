@@ -9,7 +9,7 @@ const AppendInitVect = require('./appendInitVect');
 
 
 /**
- * @description This is going to involve a SDK because need for entropy
+ * @description This is going to be connected to certified 3rd party modules
  * @param {string} - file must be of form utf-8 string
  * @paramp {string} password - password supplied by command line
  * @param {options} - FIELD boolean ABSOLUTE_PATH
