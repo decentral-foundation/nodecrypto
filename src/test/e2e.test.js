@@ -43,12 +43,12 @@ assert.deepStrictEqual("6170706c69636174696f6e3a736563726574",hexFile);
 assert.deepStrictEqual("application:secret",stringFile);
 
 
+
+// tests decodeBase64 logic
 let testBase64StrArr = [116, 24, 223, 180, 151, 153, 224, 37, 79, 250, 96, 125, 216, 173,
       187, 186, 22, 212, 37, 77, 105, 214, 191, 240, 91, 88, 5, 88, 83,
       132, 141, 121]
 let decodedArr = decodeBase64('dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk','hex'); //after this do hex to decimal
-console.log("decodedArr: ",decodedArr);
-console.log("typeof decodedArr: ",typeof decodedArr);
 let accumulation = [];
 for (let i = 0; i <= decodedArr.length; i+=2){
   let a = decodedArr.charAt(i);
@@ -56,11 +56,7 @@ for (let i = 0; i <= decodedArr.length; i+=2){
   accumulation.push(String(a)+String(b));
 }
 accumulation.pop();
-console.log("accumulation: ",accumulation);
-let mapped = testBase64StrArr.map(function (r) {
-  return intToHex(r);
-});
-assert.deepStrictEqual(mapped,accumulation);
+assert.deepStrictEqual(testBase64StrArr.map(function (r) { return intToHex(r); }),accumulation);
 
 
 

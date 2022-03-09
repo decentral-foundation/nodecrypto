@@ -4,22 +4,6 @@ module.exports = (function (){
   let child_process;
   let zsh_command;
   
-  function csvJSON(csv){
-    const lines=csv.split("\n");
-    let result = [];
-    let headers=lines[0].split(",");
-
-    for(var i=1;i<lines.length;i++){
-      let obj = {};
-      let currentline=lines[i].split(",");
-      for(var j=0;j<headers.length;j++){
-        obj[headers[j]] = currentline[j];
-      }
-      result.push(obj); 
-    }
-     
-    return JSON.stringify(result); //JSON
-  }
 
   function run(scriptPath, callback) {
     // keep track of whether callback has been invoked to prevent multiple invocations

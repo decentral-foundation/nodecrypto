@@ -4,7 +4,7 @@ const encrypt = require("../app/encrypt");
 const decrypt = require("../app/decrypt");
 const [mode, file, password ] = process.argv.slice(2);
 
-let pwd = __dirname;
+
 let combined = __dirname + '/' + file;
 
 
