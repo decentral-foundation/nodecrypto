@@ -1,7 +1,7 @@
 "use strict";
 
 let assert = require("assert").strict;
-let { genBase64 } = require("../app/getCipherKey");
+let { genBase64, byteToHex } = require("../app/getCipherKey");
 
 
 let testPromise = genBase64({
@@ -36,3 +36,8 @@ awaitPromise.then(res => {
 })
 
 
+let FF = byteToHex(255);
+let FE = byteToHex(254);
+
+assert.deepStrictEqual(FF,"FF");
+assert.deepStrictEqual(FE,"FE");
