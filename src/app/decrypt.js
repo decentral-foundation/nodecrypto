@@ -8,21 +8,6 @@ const { getCipherKey,reassemble } = require('./getCipherKey');
 
 
 /**
- * @description ⚠️ This seems like its not used - Action item decide where its needed
- * @param ⚠️ If not needed remove before push
- */
-const checkHeadForDot = (file,ABSOLUTE_PATH) => {
-  if (!ABSOLUTE_PATH) {
-    return;
-  }
-  let one = file[0];
-  let two = file[1];
-  if (one ===  "." && two === "/") {
-    return file.slice(2,file.length);
-  }
-}
-
-/**
  * @param {string} - file must be of form utf-8 string
  * @param {options} - FIELD boolean ABSOLUTE_PATH
  */

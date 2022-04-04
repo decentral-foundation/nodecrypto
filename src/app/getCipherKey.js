@@ -165,6 +165,21 @@ function reassemble(dcStore) {
   return updatedFile;
 }
 
+/**
+ * @description ⚠️ This seems like its not used - Action item decide where its needed
+ * @param ⚠️ If not needed remove before push
+ */
+const checkHeadForDot = (file,ABSOLUTE_PATH) => {
+  if (!ABSOLUTE_PATH) {
+    return;
+  }
+  let one = file[0];
+  let two = file[1];
+  if (one ===  "." && two === "/") {
+    return file.slice(2,file.length);
+  }
+}
+
 
 
 
