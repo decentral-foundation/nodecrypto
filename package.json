@@ -8,13 +8,14 @@
     "test": "test"
   },
   "dependencies": {
-    "n-readlines": "^1.0.1"
+    "n-readlines": "^1.0.1",
+    "pdfkit": "^0.13.0",
+    "tape": "^5.5.3"
   },
-  "devDependencies": {},
   "scripts": {
     "serve": "node src/app/server.js 0 100",
     "test": "node src/test/e2e.test.js ",
-    "testapi":"node test/endtoend.test.js"
+    "testapi": "node test/endtoend.test.js"
   },
   "repository": {
     "type": "git",
