@@ -42,6 +42,19 @@ module.exports = (function (){
     });
   }
 
+
+  function run_shell_command(command,cb) {   
+    exec(command, function(err,stdout,stderr){
+      if(err) {
+        cb(stderr,undefined);
+      } else {
+        console.log("stdout: ",stdout);
+        cb(null,stdout);
+     }
+   });
+  }
+
+  // must do by nov 1: deprecate as in remove this if not use
   const exec = (scriptPath,callback) => {
     var invoked = false;
     var process = childProcess.fork(scriptPath);

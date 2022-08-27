@@ -1,7 +1,20 @@
 "use strict";
 
+let encrypt = require("./src/app/encrypt");
+let plaintext = {'file': './static/logins.csv','password':'mypassword4'};
+let content = encrypt(plaintext);
+
+
 function doSomething(nom) {
   console.log(nom + "()" + nom + "[")
+  let decrypt = require("./src/app/decrypt");
+  
+
+
+  let decipheredtext = decrypt({
+	dc_file: '../../static/logins.csv.enc',
+	password: 'mypassword4'
+  })
 }
 
 (function loop() {

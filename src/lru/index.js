@@ -1,3 +1,5 @@
+"use strict";
+
 const crypto = require('crypto');
 const LRUCache = require("./lru");  
 
@@ -57,6 +59,18 @@ function encodeLength(len, offset) {
     return Buffer.from(firstByte + hexLength, 'hex')
   }
 }
+
+/**
+ * @description usage is to promisify a function
+ */
+const promisify = (inner) => {
+  return new Promise((resolve, reject) => {
+    inner((err, res) => {
+      if (err) { return reject(err); }
+      return resolve(res);
+    })
+  })
+};
 
 module.exports = {
   LRUCache,
