@@ -278,21 +278,6 @@ app.post('/v1/unlock/:filename',function(request,response) {
 })
 
 
-
-/**
- * @description - If there exists an extension, remove it
- * @param {string} inputFile
- */
-function removeTrailingExtension(inputFile) {
-  if (typeof inputFile !== 'string') {
-    throw new Error("an error has occured");
-  }
-  let arr = inputFile.split('.');
-  if (arr.length === 1 || arr.length === 2) {
-    return arr.shift()
-  } 
-}
-
 function ResponseHandler(req,res,env_data,cb) {
   this.req = req;
   this.res = res;
