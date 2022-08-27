@@ -1,7 +1,6 @@
 "use strict";
 
 let { LRUCache, encode } = require("../../lru/index.js");
-console.log("LRUCache123: ",LRUCache);
 
 module.exports = (function (){
   

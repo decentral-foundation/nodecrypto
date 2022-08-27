@@ -279,30 +279,6 @@ app.post('/v1/unlock/:filename',function(request,response) {
 
 
 
-app.get('/home/:resource', (request,response) => {
-  let fsObject = fs; 
-  let req = request;
-  let res = response;
-  let my_env_buffer = {a: [0,1,0,1], b: fsObject};
-  let responseHandler = new ResponseHandler(
-    req,
-    res,
-    my_env_buffer,
-    function myCallback (err,data) {
-      if (err) {
-        res.writeHead(404);
-        res.end(JSON.stringify(err));
-        return;
-      } 
-      res.writeHead(200);
-      res.end(data);
-      return;
-    }
-  );
-  responseHandler.helper("this is a generic message");
-})
-
-
 /**
  * @description - If there exists an extension, remove it
  * @param {string} inputFile

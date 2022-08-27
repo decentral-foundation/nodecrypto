@@ -67,7 +67,7 @@ function sendPromise(filename,index,subdirectory,crypto) {
   let filestream = filename  + '_' +  d  + '.md';
   let dirpath = '.' + '/'+ subdirectory;
   let location = dirpath + '/' + filestream;
-  console.log("dirpath and location: ",dirpath,location);
+  console.log("LOG: ",dirpath,location);
   let indexData = index + " on " + "\n" 
     + Math.floor(Math.random() * (9000000000000004 - min + 1)) + "\n"
     + crypto.randomBytes(16).toString('base64') 
