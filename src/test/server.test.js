@@ -2,7 +2,7 @@ const nock = require('nock');
 const test = require('tape');
 const axios = require('axios');
 
-const getResponse = async () => {
+const useRoute = async () => {
     const res = await axios.get('http://localhost:3500/v0/updates');
  
     const data = res.data;
@@ -14,8 +14,9 @@ test('test server routes, should receive an object with a key of updates', async
         .get(`/v0/updates`)
         .reply(200, { updates: ["no new updates"]});
 
-    const expectedData = await getResponse();
+    const mockedResponse = await useRoute();
+    const expectedResponse = { updates: ["no new updates"]};
 
-    t.deepEqual(expectedData, { updates: ["no new updates"]}, 'json response should match expected');
+    t.deepEqual(mockedResponse, expectedResponse, 'json from mocked response should match expected');
     t.end();
 })
