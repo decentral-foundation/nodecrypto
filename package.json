@@ -1,4 +1,3 @@
-
 {
   "name": "nodecrypto",
   "version": "1.0.0",
@@ -9,9 +8,10 @@
     "test": "test"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "n-readlines": "^1.0.1",
-    "pdfkit": "^0.13.0",
-    "tape": "^5.5.3"
+    "nock": "^13.2.9",
+    "pdfkit": "^0.13.0"
   },
   "scripts": {
     "serve": "node src/app/server.js 0 100",
@@ -27,5 +27,9 @@
   "bugs": {
     "url": "https://github.com/decentral-foundation/nodecrypto/issues"
   },
-  "homepage": "https://github.com/decentral-foundation/nodecrypto#readme"
+  "homepage": "https://github.com/decentral-foundation/nodecrypto#readme",
+  "devDependencies": {
+    "tap-dot": "^2.0.0",
+    "tape": "^5.6.0"
+  }
 }
