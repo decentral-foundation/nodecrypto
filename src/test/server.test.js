@@ -4,7 +4,7 @@ const axios = require('axios');
 
 const useRoute = async () => {
     const res = await axios.get('http://localhost:3500/v0/updates');
- 
+    console.log("res.data: ",res.data);
     const data = res.data;
     return data;
 }
