@@ -27,6 +27,7 @@ app.use(
   })
 );
 
+
 app.get('/', (request, response) => {
   response.json({ info: 'Signer Node API' })
 })

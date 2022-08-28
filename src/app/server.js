@@ -3,7 +3,7 @@
 const express = require('express');
 const childProcess = require('child_process');
 const path = require('path');
-
+var http = require('http');
 const fs = require("fs");
 const fsPromises = fs.promises;
 const crypto = require("crypto");
@@ -19,6 +19,11 @@ const lrucache = new LRUCache();
 lrucache.setSize(64);
 
 
+// Decouples app.js from server.js so that tests can be ran
+let app = require('./app');
+app.set('port',PORT)
+let server = http.createServer(app);
+
 /**
  * @description Upon app start up we want to collect port along with 2 numbers so that
  * @description we put server start up information each triplet will be different hashes and
@@ -27,7 +32,7 @@ lrucache.setSize(64);
  * @param PORT {number} - is the string converted to number value for port
  * 
  */
-let app = require('./app');
+
 let proms = Promise.all(
   range(0,3,"debug-")
     .map(function(fn,i) {
@@ -47,7 +52,7 @@ let proms = Promise.all(
 })
 
 
-app.listen(PORT, function () {
+server.listen(PORT, function () {
   console.log(`App is running on port ${PORT}.`);
 })
 
