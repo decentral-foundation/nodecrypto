@@ -47,7 +47,7 @@ test('test POST for API v0 protect endpoint, should receive some HTML', async(t)
     const mockedResponse = await useRoute('http://localhost:3500/v0/protect/', method, request_body, defaultHeaders);
     const expectedResponse = "<div>Received File Protection Request</div>";
 
-    t.deepEqual(mockedResponse, expectedResponse, 'json from mocked response should match expected');
+    t.deepEqual(mockedResponse, expectedResponse, 'HTML from mocked response should match expected');
     t.end();
 })
 
@@ -69,7 +69,7 @@ test('test POST for API v1 protect endpoint, should receive some JSON', async(t)
         );
 
     const mockedResponse = await useRoute('http://localhost:3500/v1/protect/', method, request_body, defaultHeaders);
-    console.log(mockedResponse);
+    // console.log(mockedResponse);
     const mockedUserId = mockedResponse['userId'];
     const expectedResponse = { 
         userId: 2100,
@@ -79,6 +79,62 @@ test('test POST for API v1 protect endpoint, should receive some JSON', async(t)
     t.ok(mockedUserId >= 0);
     t.ok(mockedUserId <= 3000);
     t.ok(Number.isInteger(mockedUserId));
-    t.deepEqual(mockedResponse, expectedResponse, 'json from mocked response should match expected');
+    t.deepEqual(mockedResponse, expectedResponse, 'JSON from mocked response should match expected');
     t.end();
 })
+
+// Test for version 0 `unlock` route
+test('test PUT for API v0 unlock endpoint, should receive some HTML', async(t) => {
+    
+    const method = 'put'
+    let request_body = {filename: 'testfile', extension: 'csv', password: 'deaba315ababa315adeaa315deabafed'};
+    
+    nock(`http://localhost:3500`, {
+        reqheaders: {...defaultHeaders},
+    })
+        .put(`/v0/unlock/`, request_body)
+        .reply(200, 
+            "<div>Received File Unlock Request</div>", 
+        );
+
+    const mockedResponse = await useRoute('http://localhost:3500/v0/unlock/', method, request_body, defaultHeaders);
+    const expectedResponse = "<div>Received File Unlock Request</div>";
+
+    t.deepEqual(mockedResponse, expectedResponse, 'HTML from mocked response should match expected');
+    t.end();
+})
+
+// Test for version 1 `unlock` route
+test('test POST for API v1 unlock endpoint, should receive some JSON', async(t) => {
+    
+    const method = 'post';
+    let filename = 'testfile.md';
+    let userId = 1800;
+    let request_body = {
+        decipherText: 'Lorem ipsum something or other', 
+        userId: userId,
+    };
+    
+    let responseMsg = `Decrypted message for user ${userId} enclosed`;
+
+    nock(`http://localhost:3500`, {
+        reqheaders: {...defaultHeaders},
+    })
+        .post(`/v1/unlock/${filename}`, request_body)
+        .reply(200, 
+            { 
+                myDecipherText: "Decrypted lorem ipsum",
+                message: responseMsg,
+            }
+        );
+
+    const mockedResponse = await useRoute('http://localhost:3500/v1/unlock/testfile.md', method, request_body, defaultHeaders);
+    const expectedResponse = { 
+        myDecipherText: "Decrypted lorem ipsum",
+        message: responseMsg,
+    };
+
+    t.deepEqual(mockedResponse, expectedResponse, 'JSON from mocked response should match expected');
+    t.end();
+})
+
