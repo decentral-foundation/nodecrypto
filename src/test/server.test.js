@@ -52,3 +52,33 @@ test('test POST for API v0 protect endpoint, should receive some HTML', async(t)
 })
 
 // Test for version 1 `protect` route
+test('test POST for API v1 protect endpoint, should receive some JSON', async(t) => {
+    
+    const method = 'post'
+    let request_body = {filename: 'testfile', password: 'deaba315ababa315adeaa315deabafed'};
+    
+    nock(`http://localhost:3500`, {
+        reqheaders: {...defaultHeaders},
+    })
+        .post(`/v1/protect/`, request_body)
+        .reply(200, 
+            { 
+                userId: 2100,
+                message: "Cipher Text stored in Cache",
+            }
+        );
+
+    const mockedResponse = await useRoute('http://localhost:3500/v1/protect/', method, request_body, defaultHeaders);
+    console.log(mockedResponse);
+    const mockedUserId = mockedResponse['userId'];
+    const expectedResponse = { 
+        userId: 2100,
+        message: "Cipher Text stored in Cache",
+    };
+
+    t.ok(mockedUserId >= 0);
+    t.ok(mockedUserId <= 3000);
+    t.ok(Number.isInteger(mockedUserId));
+    t.deepEqual(mockedResponse, expectedResponse, 'json from mocked response should match expected');
+    t.end();
+})

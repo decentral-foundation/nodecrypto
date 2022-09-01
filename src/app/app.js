@@ -223,7 +223,8 @@ app.post('/v1/protect/', function (request,response) {
   let userId = Math.round(Math.random() * (3000 - 500)) + 500;
   let { filename, password }  = request.body;
   // this splits each line in the file with slash r then encrypts it
-  let  base64Cipher = encrypt_v1(phrase.toString('utf-8').split("\r"));
+  // NB: Needed to add .join() as crypto.update() expects a string
+  let  base64Cipher = encrypt_v1(phrase.toString('utf-8').split("\r").join(' '));
   console.log("This will eventually be written to file... base64Cipher: ",base64Cipher);
 
 
@@ -234,6 +235,9 @@ app.post('/v1/protect/', function (request,response) {
     console.error("err: ",err);
     throw new Error("An error has occured: ",err);
   })// ACTION REQ size matters so can we even decrypt this properly? 
+  let content = "Lorem ipsum dolores\r";
+  let template = ["# Header", "## Subtitle", content,"\n"];
+  // NB: Just added above 2 lines for testing; don't know what template is really meant to be
   template.forEach(function (line) {
     ws.write(base64Cipher + "\n");  
   })
