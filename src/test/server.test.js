@@ -76,9 +76,9 @@ test('test POST for API v1 protect endpoint, should receive some JSON', async(t)
         message: "Cipher Text stored in Cache",
     };
 
-    t.ok(mockedUserId >= 0);
-    t.ok(mockedUserId <= 3000);
-    t.ok(Number.isInteger(mockedUserId));
+    t.ok(Number.isInteger(mockedUserId), "userId should be integer");
+    t.ok(mockedUserId >= 0, "userId should be geq 0");
+    t.ok(mockedUserId <= 3000, "userId should be leq 3000");
     t.deepEqual(mockedResponse, expectedResponse, 'JSON from mocked response should match expected');
     t.end();
 })
@@ -100,7 +100,29 @@ test('test PUT for API v0 unlock endpoint, should receive some HTML', async(t) =
     const mockedResponse = await useRoute('http://localhost:3500/v0/unlock/', method, request_body, defaultHeaders);
     const expectedResponse = "<div>Received File Unlock Request</div>";
 
-    t.deepEqual(mockedResponse, expectedResponse, 'HTML from mocked response should match expected');
+    t.equal(mockedResponse, expectedResponse, 'HTML from mocked response should match expected');
+    t.end();
+})
+
+// Failure test for version 0 `unlock` route
+// Simulate failure with empty password provided
+test('test failure API v0 unlock endpoint when empty password, should some error JSON', async(t) => {
+    
+    const method = 'put'
+    let request_body = {filename: 'testfile', extension: 'csv', password: ''};
+    
+    nock(`http://localhost:3500`, {
+        reqheaders: {...defaultHeaders},
+    })
+        .put(`/v0/unlock/`, request_body)
+        .reply(200, 
+            {message: "Error 500"}, 
+        );
+
+    const mockedResponse = await useRoute('http://localhost:3500/v0/unlock/', method, request_body, defaultHeaders);
+    const expectedResponse = {message: "Error 500"};
+
+    t.deepEqual(mockedResponse, expectedResponse, 'JSON from mocked response should match expected');
     t.end();
 })
 
