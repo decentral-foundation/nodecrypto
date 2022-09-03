@@ -2,8 +2,12 @@ const nock = require('nock');
 const test = require('tape');
 const axios = require('axios');
 
+
+const defaultHeaders = {'Connection': 'keep-alive', 'Pragma': 'no-cache'}
+
+const base_url = 'http://localhost:3500';
+
 const useRoute = async (url, method, data, headers) => {
-    // const res = await axios.get('http://localhost:3500/v0/updates');
     const res = await axios({
         method: method,
         url: url,
@@ -15,10 +19,8 @@ const useRoute = async (url, method, data, headers) => {
     return response_data;
 }
 
-const defaultHeaders = {'Connection': 'keep-alive', 'Pragma': 'no-cache'}
-
 test('test server routes, should receive an object with a key of updates', async(t) => {
-    nock(`http://localhost:3500`)
+    nock(`${base_url}`)
         .get(`/v0/updates`)
         .reply(200, { updates: ["no new updates"]});
 
@@ -35,7 +37,7 @@ test('test POST for API v0 protect endpoint, should receive some HTML', async(t)
     const method = 'post'
     let request_body = {filename: 'testfile', extension: 'csv', password: 'deaba315ababa315adeaa315deabafed'};
     
-    nock(`http://localhost:3500`, {
+    nock(`${base_url}`, {
         reqheaders: {...defaultHeaders},
     })
         .post(`/v0/protect/`, request_body)
@@ -57,7 +59,7 @@ test('test POST for API v1 protect endpoint, should receive some JSON', async(t)
     const method = 'post'
     let request_body = {filename: 'testfile', password: 'deaba315ababa315adeaa315deabafed'};
     
-    nock(`http://localhost:3500`, {
+    nock(`${base_url}`, {
         reqheaders: {...defaultHeaders},
     })
         .post(`/v1/protect/`, request_body)
@@ -89,7 +91,7 @@ test('test PUT for API v0 unlock endpoint, should receive some HTML', async(t) =
     const method = 'put'
     let request_body = {filename: 'testfile', extension: 'csv', password: 'deaba315ababa315adeaa315deabafed'};
     
-    nock(`http://localhost:3500`, {
+    nock(`${base_url}`, {
         reqheaders: {...defaultHeaders},
     })
         .put(`/v0/unlock/`, request_body)
@@ -97,7 +99,7 @@ test('test PUT for API v0 unlock endpoint, should receive some HTML', async(t) =
             "<div>Received File Unlock Request</div>", 
         );
 
-    const mockedResponse = await useRoute('http://localhost:3500/v0/unlock/', method, request_body, defaultHeaders);
+    const mockedResponse = await useRoute(`${base_url}/v0/unlock/`, method, request_body, defaultHeaders);
     const expectedResponse = "<div>Received File Unlock Request</div>";
 
     t.equal(mockedResponse, expectedResponse, 'HTML from mocked response should match expected');
@@ -111,7 +113,7 @@ test('test failure API v0 unlock endpoint when empty password, should some error
     const method = 'put'
     let request_body = {filename: 'testfile', extension: 'csv', password: ''};
     
-    nock(`http://localhost:3500`, {
+    nock(`${base_url}`, {
         reqheaders: {...defaultHeaders},
     })
         .put(`/v0/unlock/`, request_body)
@@ -119,7 +121,7 @@ test('test failure API v0 unlock endpoint when empty password, should some error
             {message: "Error 500"}, 
         );
 
-    const mockedResponse = await useRoute('http://localhost:3500/v0/unlock/', method, request_body, defaultHeaders);
+    const mockedResponse = await useRoute(`${base_url}/v0/unlock/`, method, request_body, defaultHeaders);
     const expectedResponse = {message: "Error 500"};
 
     t.deepEqual(mockedResponse, expectedResponse, 'JSON from mocked response should match expected');
@@ -139,7 +141,7 @@ test('test POST for API v1 unlock endpoint, should receive some JSON', async(t) 
     
     let responseMsg = `Decrypted message for user ${userId} enclosed`;
 
-    nock(`http://localhost:3500`, {
+    nock(`${base_url}`, {
         reqheaders: {...defaultHeaders},
     })
         .post(`/v1/unlock/${filename}`, request_body)
@@ -150,7 +152,7 @@ test('test POST for API v1 unlock endpoint, should receive some JSON', async(t) 
             }
         );
 
-    const mockedResponse = await useRoute('http://localhost:3500/v1/unlock/testfile.md', method, request_body, defaultHeaders);
+    const mockedResponse = await useRoute(`${base_url}/v1/unlock/testfile.md`, method, request_body, defaultHeaders);
     const expectedResponse = { 
         myDecipherText: "Decrypted lorem ipsum",
         message: responseMsg,
