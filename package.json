@@ -10,7 +10,7 @@
     "test": "test"
   },
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.6.0",
     "n-readlines": "^1.0.1",
     "nock": "^13.2.9",
     "pdfkit": "^0.13.0"
